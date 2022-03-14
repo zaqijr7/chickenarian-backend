@@ -1,6 +1,7 @@
 // <------------ Import Modules ------------>
 const express = require('express')
 const morgan = require('morgan')
+const bodyParser = require('body-parser')
 const cors = require('cors')
 const dotenv = require('dotenv')
 
@@ -22,7 +23,8 @@ const server = require('http').createServer(app)
 // const socket = require('./src/middlewares/socket')
 // app.use(socket(io))
 
-app.use(express.urlencoded({extended: false}));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: false }));
 app.use(morgan('dev'))
 app.use(cors('*'))
 app.use('/uploads', express.static('uploads'))

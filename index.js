@@ -30,7 +30,6 @@ app.use(cors('*'))
 app.use('/uploads', express.static('uploads'))
 
 // <----------ROUTER---------->
-test
 
 // <----------URL PORT---------->
 app.get('/', (req, res) => {

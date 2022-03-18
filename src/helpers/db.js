@@ -16,7 +16,7 @@ const db = mysql.createConnection({
   user: DB_USER,
   password: DB_PASSWORD,
   insecureAuth: true,
-  port: 3307
+  // port: 3307
 });
 
 db.connect();

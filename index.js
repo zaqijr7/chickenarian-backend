@@ -30,7 +30,7 @@ app.use(morgan('dev'))
 app.use(cors('*'))
 // app.use('/uploads', express.static('uploads'))
 
-cron.schedule('* * * * * *', (time) => {
+cron.schedule('1-59 * * * * *', (time) => {
   // console.log('running a task every ', time);
   // console.log('running a task every ', time.getMinutes() ,time.getSeconds());
 });

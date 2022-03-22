@@ -13,3 +13,27 @@ exports.inputAmount = (data = {}) => {
     console.log(q);
   })
 }
+
+
+exports.getWalletUser = (data) => {
+  return new Promise((resolve, reject) => {
+    db.query(`
+    SELECT * FROM wallets WHERE id_user='${data}'
+    `, (err, res, field) => {
+      if (err) reject(err);
+      resolve(res);
+    })
+  })
+}
+
+exports.updateWallet = (data) => {
+  return new Promise((resolve, reject) => {
+    db.query(`
+      UPDATE  wallets
+      SET     total_amount = GREATEST(0, total_amount - 10)
+      WHERE   id_user = 4    
+    `, (err, res, field) => {
+      
+    })
+  })
+}

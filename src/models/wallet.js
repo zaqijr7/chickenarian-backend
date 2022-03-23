@@ -29,11 +29,12 @@ exports.getWalletUser = (data) => {
 exports.updateWallet = (data) => {
   return new Promise((resolve, reject) => {
     db.query(`
-      UPDATE  wallets
-      SET     total_amount = GREATEST(0, total_amount - 10)
-      WHERE   id_user = 4    
+      UPDATE wallets
+      SET total_amount = GREATEST(0, total_amount - ${data.costBuy})
+      WHERE id_user = ${data.id_user}    
     `, (err, res, field) => {
-      
+      if (err) reject(err);
+      resolve(res);
     })
   })
 }

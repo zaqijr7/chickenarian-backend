@@ -25,3 +25,27 @@ exports.insertFeedUser = (data) => {
     });
   })
 }
+
+exports.getDataFeedUser = (data) => {
+  return new Promise((resolve, reject) => {
+    db.query(`
+      SELECT * FROM feeds WHERE id_user='${data.id_user}' AND type_of_feed='${data.type_of_feed}'
+    `, (err, res, field) => {
+      if (err) reject(err);
+      resolve(res);
+    })
+  })
+}
+
+exports.updateFeedUser = (data) => {
+  return new Promise((resolve, reject) => {
+    db.query(`
+      UPDATE feeds
+      SET total_items = total_items + ${data.total_items}
+      WHERE id_user = ${data.id_user} AND type_of_feed = '${data.type_of_feed}'
+    `, (err, res, field) => {
+      if (err) reject(err);
+      resolve(res);
+    })
+  })
+}

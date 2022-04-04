@@ -6,6 +6,8 @@ const cors = require('cors');
 const dotenv = require('dotenv');
 const cron = require('node-cron');
 const router = require("./src/routers/index");
+const dateFormater = require("./src/helpers/dateFormater")
+const siclusPets = require('./src/controllers/pets')
 // <------------ Config ------------>
 dotenv.config()
 const { APP_PORT } = process.env;
@@ -30,9 +32,14 @@ app.use(morgan('dev'))
 app.use(cors('*'))
 // app.use('/uploads', express.static('uploads'))
 
-cron.schedule('1-59 * * * * *', (time) => {
-  // console.log('running a task every ', time);
-  // console.log('running a task every ', time.getMinutes() ,time.getSeconds());
+cron.schedule('1 * * * * *', (time) => {
+  // console.log('running a task every ', dateFormater(time));
+  // console.log(dateFormater(time));
+  const dateRange = time.getTime() - 172800000;
+  console.log(dateFormater(dateRange));
+  siclusPets.siclusPets({dateBefore : '1990-01-01 00:00:00', dateAfter: dateFormater(dateRange)});
+  // siclusPets.siclusPets({dateBefore : dateFormater(dateRange), dateAfter: dateFormater(time)});
+  // console.log(dateFormater(dateBefore) + ' - ' + dateFormater(time));
 });
 
 // <----------ROUTER---------->

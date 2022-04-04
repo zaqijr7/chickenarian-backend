@@ -9,4 +9,4 @@ const response = (res, status, success, message, results, pageInfo) => {
   return res.status(result.status).send(result)
 }
   
-module.exports = response
+module.exports = response;

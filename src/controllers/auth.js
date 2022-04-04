@@ -28,7 +28,6 @@ exports.register = async (req, res) => {
     if (inputUser.affectedRows) {
       await walletsModel.inputAmount({ id_user: inputUser.insertId, total_amount: 100 });
     }
-    console.log(inputUser, '<<<<<<<<<<<<<< input user');
     res.send('oke')
   } catch (error) {
     console.log(error.message);

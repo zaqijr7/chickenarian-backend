@@ -3,7 +3,7 @@ const walletModels = require('../models/wallet');
 const inventoryModels = require('../models/inventory');
 const transactionsModel = require('../models/transactions');
 const response = require('../helpers/response');
-const dateFormater = require('../helpers/dateFormater');
+const dateNowFormater = require('../helpers/dateNowFormater');
 
 exports.buy = async (req, res) => {
   try {
@@ -25,8 +25,8 @@ exports.buy = async (req, res) => {
         id_user: id_user,
         pet_name: 'test',
         status_evolution: 'baby',
-        is_feed_today: dateFormater,
-        evolution_date: dateFormater,
+        is_feed_today: dateNowFormater,
+        evolution_date: dateNowFormater,
       }
       const insertPetUser = await inventoryModels.insertPetUser(dataPet);
       console.log(insertPetUser, "Insert pet to invetory user");
@@ -39,11 +39,9 @@ exports.buy = async (req, res) => {
         total_items: totalItem,
       }
       if (!getDataFeedUser.length) {
-        const insertFeedUser = await inventoryModels.insertFeedUser(dataFeed);
-        console.log(insertFeedUser, "insert data feed user");
+        await inventoryModels.insertFeedUser(dataFeed);
       } else {
-        const updateFeedUser = await inventoryModels.updateFeedUser(dataFeed);
-        console.log(updateFeedUser, "update data feed user");
+        await inventoryModels.updateFeedUser(dataFeed);
       }
     }
     const insertHistoryTransaction = await transactionsModel.insertHistoryTransaction({id_user, id_item: idItem, total_transactions: totalItem, total_price: costBuy})

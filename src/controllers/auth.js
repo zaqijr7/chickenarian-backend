@@ -24,7 +24,7 @@ exports.register = async (req, res) => {
     const salt = await bcrypt.genSalt();
     const encryptedPassword = await bcrypt.hash(password, salt);
 
-    const inputUser = await usersModel.inputDataUser({username, email, password: encryptedPassword});
+    const inputUser = await usersModel.inputDataUser({ username, email, password: encryptedPassword });
     if (inputUser.affectedRows) {
       await walletsModel.inputAmount({ id_user: inputUser.insertId, total_amount: 100 });
     }
@@ -36,16 +36,13 @@ exports.register = async (req, res) => {
 
 
 exports.login = async (req, res) => {
-  const { username, email, password } = req.body;
+  const { email, password } = req.body;
 
-  if ( !username || !email || !password ) return response(res, 400, false, `Field cannot be empty`);
-  
-  const userExist = await usersModel.getUserByCondition({ username });
-  if (!userExist.length) return response(res, 400, false, `User not found`);
+  if (!email || !password) return response(res, 400, false, `Field cannot be empty`);
 
   const emailExist = await usersModel.getUserByCondition({ email });
   if (!emailExist.length) return response(res, 400, false, `Email not found`);
-  const compare = await bcrypt.compare(password, userExist[0].password);
+  const compare = await bcrypt.compare(password, emailExist[0].password);
   if (!compare) return response(res, 400, false, `Password Wrong`);
 
   const data = {
@@ -56,6 +53,6 @@ exports.login = async (req, res) => {
 
   console.log(APP_KEY, "<<< ini appkey");
   const token = jwt.sign(data, APP_KEY);
-  return response(res, 200, true, 'Login Success', {t: token});
+  return response(res, 200, true, 'Login Success', { t: token });
 
 }

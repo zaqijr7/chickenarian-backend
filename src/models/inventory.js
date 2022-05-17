@@ -49,3 +49,13 @@ exports.updateFeedUser = (data) => {
     })
   })
 }
+
+exports.getInventory = (data) => {
+  console.log("DATA", data);
+  return new Promise((resolve, reject) => {
+    db.query(`SELECT * FROM user_inventory WHERE user_id=${data.userId}`, (err, res, field) => {
+      if (err) reject(err);
+      resolve(res);
+    })
+  })
+}

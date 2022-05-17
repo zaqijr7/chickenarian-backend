@@ -44,12 +44,25 @@ exports.buy = async (req, res) => {
         await inventoryModels.updateFeedUser(dataFeed);
       }
     }
-    const insertHistoryTransaction = await transactionsModel.insertHistoryTransaction({id_user, id_item: idItem, total_transactions: totalItem, total_price: costBuy})
+    const insertHistoryTransaction = await transactionsModel.insertHistoryTransaction({ id_user, id_item: idItem, total_transactions: totalItem, total_price: costBuy })
     // console.log(getItem, "ini wallet user");
     console.log(insertHistoryTransaction, "<<<<< history transaction");
 
     return response(res, 200, true, `Buy the ${getItem[0].type_of_item} success`)
   } catch (error) {
     console.log(error.message);
+  }
+}
+
+exports.getItems = async (req, res) => {
+  try {
+    const items = await storeModels.getItems();
+    const data = {
+      length: items.length,
+      items: items
+    }
+    if (items) return response(res, 200, true, 'Success get items', data);
+  } catch (error) {
+    return response(res, 400, false);
   }
 }

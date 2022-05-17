@@ -33,8 +33,6 @@ app.use(cors('*'))
 // app.use('/uploads', express.static('uploads'))
 
 cron.schedule('1 * * * * *', (time) => {
-  // console.log('running a task every ', dateFormater(time));
-  // console.log(dateFormater(time));
   const dateRange = time.getTime() - 172800000;
   console.log(dateFormater(dateRange));
   siclusPets.siclusPets({ dateBefore: '1990-01-01 00:00:00', dateAfter: dateFormater(dateRange) });

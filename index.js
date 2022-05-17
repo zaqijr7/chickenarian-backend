@@ -37,7 +37,7 @@ cron.schedule('1 * * * * *', (time) => {
   // console.log(dateFormater(time));
   const dateRange = time.getTime() - 172800000;
   console.log(dateFormater(dateRange));
-  siclusPets.siclusPets({dateBefore : '1990-01-01 00:00:00', dateAfter: dateFormater(dateRange)});
+  siclusPets.siclusPets({ dateBefore: '1990-01-01 00:00:00', dateAfter: dateFormater(dateRange) });
   // siclusPets.siclusPets({dateBefore : dateFormater(dateRange), dateAfter: dateFormater(time)});
   // console.log(dateFormater(dateBefore) + ' - ' + dateFormater(time));
 });

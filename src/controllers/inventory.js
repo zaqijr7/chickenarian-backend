@@ -6,7 +6,7 @@ const { APP_KEY } = process.env;
 exports.getInventory = async (req, res) => {
     const { userId } = req.body;
 
-    if (!userId) return response(res, 400, false, `Field cannot be empty`);
+    if (!userId) return response(res, 400, false, `userId cannot be empty`);
 
     const result = await inventoryModel.getInventory({ userId })
     if (!result.length) return response(res, 400, false, `Inventory not found`);
@@ -23,4 +23,16 @@ exports.getInventory = async (req, res) => {
     // const token = jwt.sign(data, APP_KEY);
     // return response(res, 200, true, 'Login Success', { t: token });
 
+}
+
+exports.insertInventoryData = async (req, res) => {
+    const { userId, coins, totalChicken, totalEggs, totalFeeds, totalOthers } = req.body;
+
+    if (!userId) return response(res, 400, false, `userId cannot be empty`);
+
+    let profile = coins ?? "1200";
+    console.log("COINS", profile);
+
+    // const result = await inventoryModel.getInventory({ userId })
+    // if (!result.length) return response(res, 400, false, `Inventory not found`);    
 }

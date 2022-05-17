@@ -14,7 +14,7 @@ exports.getPetId = () => {
 exports.getAllPets = (data) => {
   return new Promise((resolve, reject) => {
     db.query(`
-      SELECT * FROM users_chickens WHERE is_fed_today >= '${data.dateBefore}' AND is_feed_today <= '${data.dateAfter}' 
+      SELECT * FROM users_chickens WHERE last_feed >= '${data.dateBefore}' AND last_feed <= '${data.dateAfter}' 
     `, (err, res, field) => {
       if (err) reject(err);
       resolve(res);

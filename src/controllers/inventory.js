@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 const { APP_KEY } = process.env;
 
 exports.getInventory = async (req, res) => {
+  try {
     const { userId } = req.body;
 
     if (!userId) return response(res, 400, false, `userId cannot be empty`);
@@ -11,28 +12,19 @@ exports.getInventory = async (req, res) => {
     const result = await inventoryModel.getInventory({ userId })
     if (!result.length) return response(res, 400, false, `Inventory not found`);
 
-    console.log(result);
+    console.log(result[0]);
 
-    // const data = {
-    //     id_user: emailExist[0].id_user,
-    //     email: emailExist[0].email,
-    //     username: emailExist[0].username,
-    // }
+    const data = {
+      inventory_id: result[0].inventory_id,
+      user_id: result[0].user_id,
+      total_chickens: result[0].total_chickens,
+      total_eggs: result[0].total_eggs,
+      total_feeds: result[0].total_feeds,
+      total_others: result[0].total_others
+    }
 
-    // console.log(APP_KEY, "<<< ini appkey");
-    // const token = jwt.sign(data, APP_KEY);
-    // return response(res, 200, true, 'Login Success', { t: token });
-
-}
-
-exports.insertInventoryData = async (req, res) => {
-    const { userId, coins, totalChicken, totalEggs, totalFeeds, totalOthers } = req.body;
-
-    if (!userId) return response(res, 400, false, `userId cannot be empty`);
-
-    let profile = coins ?? "1200";
-    console.log("COINS", profile);
-
-    // const result = await inventoryModel.getInventory({ userId })
-    // if (!result.length) return response(res, 400, false, `Inventory not found`);    
+    return response(res, 200, true, 'Success get inventory', data);
+  } catch (error) {
+    return response(res, 500, true, 'Server error');
+  }
 }

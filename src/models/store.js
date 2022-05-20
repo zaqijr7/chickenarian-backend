@@ -1,7 +1,6 @@
 const db = require('../helpers/db');
 
 exports.getItem = (data) => {
-  console.log(data);
   return new Promise((resolve, reject) => {
     db.query(`
       SELECT * FROM market WHERE ${Object.keys(data)[0]}='${Object.values(data)[0]}'
